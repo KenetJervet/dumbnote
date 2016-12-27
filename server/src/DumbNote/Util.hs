@@ -14,3 +14,5 @@ instance ToJSON UUID where
 
 newId :: IO UUID
 newId = nextRandom
+
+type UniqueData d = (Id, d)

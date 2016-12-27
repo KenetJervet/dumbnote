@@ -9,13 +9,13 @@ import           Data.Time
 import           DumbNote.Util
 import           GHC.Generics
 
-data Note = Note { id           :: Id
-                 , title        :: Text
-                 , content      :: NoteContent
-                 , creationTime :: UTCTime
-                 } deriving (Generic, ToJSON)
+data NoteData = NoteData { title        :: Text
+                         , content      :: NoteContent
+                         , creationTime :: UTCTime
+                         } deriving (Generic, ToJSON)
 
 data NoteContent = PlainTextContent Text
                  | MarkdownContent Text
                  deriving (Generic, ToJSON)
 
+type Note = UniqueData NoteData

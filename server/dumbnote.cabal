@@ -25,6 +25,7 @@ library
   build-depends:       base >= 4.7 && < 5
                      , aeson
                      , cryptohash
+                     , stm
                      , text
                      , time
                      , uuid
@@ -49,6 +50,9 @@ test-suite dumbnote-test
   main-is:             Spec.hs
   build-depends:       base
                      , dumbnote
+                     , async
+                     , tasty
+                     , tasty-hunit
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
