@@ -1,0 +1,2 @@
+module DumbNote.Command where
+
