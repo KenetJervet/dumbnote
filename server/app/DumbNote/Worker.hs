@@ -22,5 +22,5 @@ getMessage :: DNMessageChannel -> IO DNMessage
 getMessage chan = atomically $ readTChan chan
 
 loop :: IO ()
-loop = readIORef workChan >>= \chan -> forever $ do
-  getMes
+loop = readIORef workChan >>= \ chan -> forever $ do
+  return ()  -- TODO: Dunno what to do

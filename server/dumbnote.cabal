@@ -18,12 +18,15 @@ library
   exposed-modules:     DumbNote
                      , DumbNote.Command
                      , DumbNote.Config
+                     , DumbNote.Folder
                      , DumbNote.Note
                      , DumbNote.Session
                      , DumbNote.Store
                      , DumbNote.Util
   build-depends:       base >= 4.7 && < 5
+                     -- Start external dependencies
                      , aeson
+                     , ConfigFile
                      , cryptohash
                      , stm
                      , text
@@ -38,7 +41,9 @@ executable dumbnote-server
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , dumbnote
+                     -- Start external dependencies
                      , aeson
+                     , directory
                      , servant-server
                      , wai
                      , warp
@@ -50,6 +55,7 @@ test-suite dumbnote-test
   main-is:             Spec.hs
   build-depends:       base
                      , dumbnote
+                     -- Start external dependencies
                      , async
                      , tasty
                      , tasty-hunit
