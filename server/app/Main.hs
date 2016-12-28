@@ -3,11 +3,12 @@
 module Main where
 
 import           DumbNote.Server
+import           DumbNote.Server.Config
 import           Network.Wai
 import           Network.Wai.Handler.Warp
 
-runServer :: ServerConfig -> IO ()
-runServer ServerConfig{..} = run port server
+runServer :: Config -> IO ()
+runServer Config{..} = run port server
 
 main :: IO ()
-main = run 8081 server
+main = runServer def

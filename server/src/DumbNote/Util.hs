@@ -1,6 +1,8 @@
 {-# LANGUAGE OverloadedStrings  #-}
 
-module DumbNote.Util where
+module DumbNote.Util ( module DumbNote.Util
+                     , Data.UUID.fromString
+                     ) where
 
 import           Data.Aeson
 import           Data.UUID
@@ -10,7 +12,7 @@ import           GHC.Generics
 type Id = UUID
 
 instance ToJSON UUID where
-  toJSON _ = String ""
+  toJSON = toJSON . toString
 
 newId :: IO UUID
 newId = nextRandom
