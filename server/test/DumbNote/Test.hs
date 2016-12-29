@@ -7,6 +7,5 @@ import           Test.Tasty.HUnit
 
 tests :: TestTree
 tests = testGroup "Tests"
-  [ TAsync.tests
-  , TMetadata.tests
+  [ TMetadata.tests
   ]

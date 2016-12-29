@@ -8,6 +8,9 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const dev_root = "localhost:9080"
+const server_root = "localhost:8130"
+
 let config = {
   devtool: '#eval-source-map',
   eslint: {
@@ -59,6 +62,12 @@ let config = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'ROOT_URL': JSON.stringify("http://" + dev_root),
+        'API_ROOT': JSON.stringify("http://" + dev_root + "/api")
+      }
+    }),
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -67,6 +76,20 @@ let config = {
     }),
     new webpack.NoErrorsPlugin()
   ],
+  devServer: {
+    historyApiFallback: true,
+    host: dev_root.split(':')[0],
+    port: dev_root.split(':')[1],
+    proxy: {
+      '/api/*': {
+        target: "http://" + server_root,
+        secure: false,
+        pathRewrite: {
+          '^/api': '/'
+        }
+      }
+    }
+  },
   output: {
     filename: '[name].js',
     path: path.join(__dirname, 'app/dist')

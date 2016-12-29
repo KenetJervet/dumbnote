@@ -1,5 +1,7 @@
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE DeriveGeneric  #-}
+{-# LANGUAGE DeriveAnyClass    #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards   #-}
 
 module DumbNote.Note where
 
@@ -14,8 +16,21 @@ data NoteData = NoteData { title        :: Text
                          , creationTime :: UTCTime
                          } deriving (Generic, ToJSON)
 
-data NoteContent = PlainTextContent Text
-                 | MarkdownContent Text
+data NoteType = PlainText | Markdown deriving (Generic, ToJSON)
+data NoteContent = NoteContent NoteType Text
                  deriving (Generic, ToJSON)
 
-type Note = UniqueData NoteData
+newtype Note = Note { unNote :: (UniqueData NoteData) } deriving Generic
+
+instance ToJSON Note where
+  toJSON (Note (uuid, NoteData{..})) =
+    object [ "id" .= show uuid
+           , "title" .= title
+           , "type" .= typeOf content
+           , "content" .= contentOf content
+           , "creationTime" .= creationTime
+           ]
+    where
+      typeOf (NoteContent PlainText _) = "plaintext" :: Text
+      typeOf (NoteContent Markdown _)  = "markdown" :: Text
+      contentOf (NoteContent _ content) = content

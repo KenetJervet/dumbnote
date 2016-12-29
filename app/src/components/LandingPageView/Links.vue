@@ -20,6 +20,7 @@
   <ul>
     <li><a href="https://simulatedgreg.gitbooks.io/electron-vue/content/index.html">documentation</a></li> |
     <li><a href="http://electron.atom.io/">electron</a></li> |
-    <li><a href="http://vuejs.org/">vue.js</a></li>
+    <li><a href="http://vuejs.org/">vue.js</a></li> |
+    <li><router-link to="/notes">Notes</router-link></li>
   </ul>
 </template>

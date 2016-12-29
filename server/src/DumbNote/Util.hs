@@ -1,4 +1,5 @@
-{-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE OverloadedStrings    #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 
 module DumbNote.Util ( module DumbNote.Util
                      , Data.UUID.fromString
@@ -11,10 +12,10 @@ import           GHC.Generics
 
 type Id = UUID
 
-instance ToJSON UUID where
+instance ToJSON Id where
   toJSON = toJSON . toString
 
-newId :: IO UUID
+newId :: IO Id
 newId = nextRandom
 
 type UniqueData d = (Id, d)

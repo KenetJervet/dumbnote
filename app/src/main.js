@@ -5,10 +5,12 @@ import Router from 'vue-router'
 
 import App from './App'
 import routes from './routes'
+import {VueExt} from './dn-util'
 
 Vue.use(Electron)
 Vue.use(Resource)
 Vue.use(Router)
+Vue.use(VueExt)
 Vue.config.debug = true
 
 const router = new Router({
