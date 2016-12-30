@@ -29,6 +29,7 @@ library
                      , aeson
                      , bytestring
                      , ConfigFile
+                     , containers
                      , cryptohash
                      , directory
                      , filepath
@@ -50,6 +51,7 @@ executable dumbnote-server
                      , dumbnote
                      -- Start external dependencies
                      , aeson
+                     , containers
                      , directory
                      , http-api-data
                      , servant-server

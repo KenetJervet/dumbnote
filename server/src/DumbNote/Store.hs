@@ -29,5 +29,5 @@ getRootFolders store@DNStore{..} = listRootEntries >>= mapM toFolder
     listRootEntries = (dnFolderRoot store >>= listDirectory) >>= filterM doesDirectoryExist
     toFolder entry = do
       let uuid = fromJust $ fromString entry
-      return (uuid, FolderData { name = "GG" })
+      return $ Folder (uuid, FolderData { name = "GG" })
 

@@ -1,18 +1,50 @@
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module DumbNote.Server.Handler where
 
+import           Control.Monad
 import           Control.Monad.IO.Class
 import           Data.IORef
 import           Data.List              (find)
 import           Data.Maybe
 import qualified Data.Text              as T
 import           Data.Time.Clock
+import           Data.Tree
+import           DumbNote.Folder
 import           DumbNote.Note
 import           DumbNote.Util
 import           Servant
 import           System.IO.Unsafe
 import           Text.Printf
+
+-- Folders-related handlers
+
+{-# NOINLINE foldersRef #-}
+foldersRef :: IORef FolderTree
+foldersRef = unsafePerformIO $ do
+  rootId:leafId1:leafId2:_ <- replicateM 3 newId
+  return $
+    FolderTree { folder = Folder (rootId, FolderData { name = "Root" })
+               , children = [ FolderTree { folder = Folder (leafId1, FolderData { name = "1" })
+                                         , children = [ FolderTree { folder = Folder (leafId1, FolderData { name = "1.1" })
+                                                                   , children = []
+                                                                   }
+                                                      , FolderTree { folder = Folder (leafId2, FolderData { name = "1.2" })
+                                                                   , children = []
+                                                                   }
+                                                      ]
+                                         }
+                            , FolderTree { folder = Folder (leafId2, FolderData { name = "2" })
+                                         , children = []
+                                         }
+                            ]
+               }
+  >>= newIORef
+
+
+getFolderTreeHandler :: Handler FolderTree
+getFolderTreeHandler = liftIO $ readIORef foldersRef
 
 {-# NOINLINE notesRef #-}
 notesRef :: IORef [Note]
