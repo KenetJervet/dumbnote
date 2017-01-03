@@ -1,0 +1,9 @@
+#!/bin/sh
+
+pushd server
+echo "Building dumbnote-server"
+stack build
+echo "Starting server"
+stack exec dumbnote-server
+echo "Stopped"
+popd

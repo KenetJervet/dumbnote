@@ -19,11 +19,12 @@ library
                      , DumbNote.Command
                      , DumbNote.Config
                      , DumbNote.Folder
+                     , DumbNote.Folder.Metadata
                      , DumbNote.Metadata
                      , DumbNote.Note
                      , DumbNote.Session
                      , DumbNote.Store
-                     , DumbNote.Util
+                     , DumbNote.UniqueData
   build-depends:       base >= 4.7 && < 5
                      -- Start external dependencies
                      , aeson
@@ -37,7 +38,9 @@ library
                      , stm
                      , text
                      , time
+                     , unordered-containers
                      , uuid
+                     , yaml
   default-language:    Haskell2010
 
 executable dumbnote-server
@@ -67,6 +70,8 @@ test-suite dumbnote-test
   main-is:             Spec.hs
   other-modules:       DumbNote.Test
                      , DumbNote.Test.Async
+                     , DumbNote.Test.Folder
+                     , DumbNote.Test.Folder.Metadata
   build-depends:       base
                      , dumbnote
                      -- Start external dependencies
@@ -75,6 +80,7 @@ test-suite dumbnote-test
                      , tasty
                      , tasty-hunit
                      , text
+                     , unordered-containers
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 

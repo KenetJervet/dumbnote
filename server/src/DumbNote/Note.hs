@@ -8,7 +8,7 @@ module DumbNote.Note where
 import           Data.Aeson
 import           Data.Text
 import           Data.Time
-import           DumbNote.Util
+import           DumbNote.UniqueData
 import           GHC.Generics
 
 data NoteData = NoteData { title        :: Text

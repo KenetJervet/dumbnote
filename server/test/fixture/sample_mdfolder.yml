@@ -1,0 +1,13 @@
+root: "98462757-e421-49e0-b342-ceecfbe771be"
+folders:
+  "37533b10-6890-4c25-8056-35a3f216385a":
+    name: Foo
+    children:
+      - "9004db51-149d-4748-8875-78338bbf6192"
+      - "0376561f-fa29-42d1-9b10-c02ccaa6986a"
+  "9004db51-149d-4748-8875-78338bbf6192":
+    name: Bar
+    children: []
+  "0376561f-fa29-42d1-9b10-c02ccaa6986a":
+    name: Baz
+    children: []

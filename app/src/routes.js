@@ -1,8 +1,8 @@
 export default [
   {
     path: '/',
-    name: 'landing-page',
-    component: require('components/LandingPageView')
+    name: 'main-view',
+    component: require('components/MainView')
   },
   {
     path: '/notes',

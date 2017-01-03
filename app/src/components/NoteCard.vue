@@ -1,13 +1,13 @@
 <template>
-  <div>
-      <router-link :to="`notes/${this.card.id}`"><h2>{{ this.card.title }}</h2>
-      <p>{{ this.card.content }}</p>
-  </div>
+    <div @click="selectNote">
+        <h4>{{ this.note.title }}</h4>
+        <p>{{ this.note.content }}</p>
+    </div>
 </template>
 
 <script>
   export default {
     name: 'note-card',
-    props: ['card']
+    props: ['note']
   }
 </script>
