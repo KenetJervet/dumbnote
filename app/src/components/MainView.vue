@@ -22,7 +22,7 @@
     },
     created () {
       this.http_get('folders').then(resp => {
-        this.rootFolders = resp.data
+        this.rootFolders = [resp.data]
       })
     },
     methods: {

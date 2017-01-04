@@ -17,6 +17,7 @@ import           Data.Maybe
 import           Data.Text           (Text)
 import qualified Data.Text           as T
 import           Data.Yaml
+import qualified DumbNote.Folder     as F
 import           DumbNote.UniqueData
 import           GHC.Generics
 
@@ -48,3 +49,18 @@ readByteString = return . decode
 
 readFile :: FilePath -> IO (Maybe Metadata)
 readFile filePath = decodeFile filePath
+
+-------------------------
+-- Metadata to FolderTree
+-------------------------
+
+toFolderTree :: Metadata -> F.FolderTree
+toFolderTree Metadata{..} = fmToFolderTree folders root
+  where
+    fmToFolderTree :: MDFolderMap -> Id -> F.FolderTree
+    fmToFolderTree folderMap rootId = let
+      rootFolder = folderMap HM.! rootId
+      in
+      F.FolderTree { folder = F.Folder (rootId, F.FolderData { name = name rootFolder})
+                   , children = map (fmToFolderTree folderMap) (children rootFolder)
+                   }

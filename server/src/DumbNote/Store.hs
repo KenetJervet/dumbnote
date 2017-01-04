@@ -9,12 +9,12 @@ import           Data.Maybe
 import qualified Data.Text                as T
 import           Debug.Trace
 import           DumbNote.Config
-import           DumbNote.Folder as F
-import           DumbNote.Folder.Metadata as MD
+import           DumbNote.Folder          as F
+import           DumbNote.Folder.Metadata (toFolderTree)
+import qualified DumbNote.Folder.Metadata as FMD
 import           DumbNote.Note
 import           DumbNote.UniqueData
 import           DumbNote.Util.FileSystem
-import           Prelude                  hiding (readFile)
 import           System.Directory
 import           System.FilePath
 
@@ -26,33 +26,26 @@ data DNStore = DNStore { location :: FilePath
 def :: DNStore
 def = DNStore { location = "~/.local/share/dumbnote/store" }
 
+type StoreAction a = DNStore -> a
+type StoreIOAction a = StoreAction (IO a)
+
 
 open :: DNConfig -> IO DNStore
 open DNConfig{ repoConfig = DNRepoConfig{..} } = do
   return DNStore { location = T.unpack repoLocation }
 
-dnFolderRoot :: DNStore -> IO FilePath
+dnFolderRoot :: StoreIOAction FilePath
 dnFolderRoot DNStore{..} = expandHome $ location </> "folders"
 
 -- Folder meta data
 
-dnFolderMetaFile :: DNStore -> IO FilePath
+dnFolderMetaFile :: StoreIOAction FilePath
 dnFolderMetaFile store = dnFolderRoot store >>= return . (</> ".meta")
 
-dnFolderMeta :: DNStore -> IO (Maybe Metadata)
-dnFolderMeta store = dnFolderMetaFile store >>= readFile
+dnFolderMeta :: StoreIOAction (Maybe FMD.Metadata)
+dnFolderMeta store = dnFolderMetaFile store >>= FMD.readFile
 
-getFolderTree :: FilePath -> IO FolderTree
-getFolderTree entry = do
-  let uuid = maybe nil id (fromString entry)
-  createDirectoryIfMissing {- create parents -}True entry
-  children <- listDirectory entry
-              >>= return . map (entry </>)
-              >>= filterM doesDirectoryExist
-              >>= mapM getFolderTree
-  return $ FolderTree { folder = Folder (uuid, FolderData { name = T.pack entry })
-                      , children
-                      }
-
-getRootFolder :: DNStore -> IO [FolderTree]
-getRootFolder store@DNStore{..} = dnFolderRoot store >>= getFolderTree >>= return . F.children
+getFolderTree :: StoreIOAction (Maybe FolderTree)
+getFolderTree store = do
+  metadata <- dnFolderMeta store
+  return $ maybe Nothing (Just . toFolderTree) metadata

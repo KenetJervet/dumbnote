@@ -3,7 +3,7 @@ version:             0.1.0.0
 synopsis:            A note-taking software
 description:         Please see README.md
 homepage:            https://github.com/KenetJervet/dumbnote#readme
-license:             GPLv3
+license:             GPL-3
 license-file:        LICENSE
 author:              Yukio Usuzumi
 maintainer:          anohigisavay@gmail.com

@@ -9,12 +9,12 @@ import           DumbNote.Server.Handler
 import           DumbNote.UniqueData
 import           Servant
 
-type API = "folders" :> Get '[JSON] [FolderTree]
+type API = "folders" :> Get '[JSON] FolderTree
            :<|> "notes" :> Capture "id" String :> Get '[JSON] Note
 
 api :: Server API
 api = getFolderTreeHandler
-  :<|> getNoteHandler
+      :<|> getNoteHandler
 
 apiProxy :: Proxy API
 apiProxy = Proxy

@@ -21,8 +21,8 @@ import           Text.Printf
 
 -- Folders-related handlers
 
-getFolderTreeHandler :: Handler [FolderTree]
-getFolderTreeHandler = liftIO $ getRootFolder DNStore.def
+getFolderTreeHandler :: Handler FolderTree
+getFolderTreeHandler = liftIO (getFolderTree DNStore.def >>= return . fromJust)
 
 getNoteListHandler :: FilePath -> Handler [Note]
 getNoteListHandler filePath = undefined
