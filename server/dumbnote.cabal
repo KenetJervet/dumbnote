@@ -1,14 +1,14 @@
 name:                dumbnote
 version:             0.1.0.0
-synopsis:            Initial project template from stack
+synopsis:            A note-taking software
 description:         Please see README.md
-homepage:            https://github.com/githubuser/dumbnote#readme
-license:             BSD3
+homepage:            https://github.com/KenetJervet/dumbnote#readme
+license:             GPLv3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2016 Author name here
-category:            Web
+author:              Yukio Usuzumi
+maintainer:          anohigisavay@gmail.com
+copyright:           2016 Yukio Usuzumi
+category:            Office
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
@@ -86,4 +86,4 @@ test-suite dumbnote-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/dumbnote
+  location: https://github.com/KenetJervet/dumbnote
